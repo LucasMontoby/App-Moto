@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const methodOverride = require('method-override');
 const { sequelize } = require('./models');
+const motoRouter = require('./routes/motoRouter');
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', motoRouter);
 
 app.listen(3000, async() =>{
     console.log('Server is running on port 3000');
