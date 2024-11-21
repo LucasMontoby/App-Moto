@@ -45,19 +45,19 @@ const motoController = {
         const { id } = req.params;
         const { nombre, descripcion, precio, categoria_id } = req.body;
         const imagen = req.file ? req.file.filename : null;
-        try{
-            const moto = await Moto.findByPk(id);
-            moto.nombre = nombre;
-            moto.descripcion = descripcion;
-            moto.precio = precio;
-            moto.imagen = imagen;
-            moto.categoria_id = categoria_id;
-            await moto.save();
-            res.redirect('/motos');
-        } catch{
-            res.status(500).send({ message: 'Error al actualizar la moto'});
+        try {
+          const moto = await Moto.findByPk(id);
+          moto.nombre = nombre;
+          moto.descripcion = descripcion;
+          moto.precio = precio;
+          if (imagen) moto.imagen = imagen;
+          moto.categoria_id = categoria_id;
+          await moto.save();
+          res.redirect('/motos');
+        } catch (error) {
+          res.status(500).send('Error al actualizar la moto');
         }
-    },
+      },
 
     destroy: async (req, res) => {
         const { id } = req.params;
